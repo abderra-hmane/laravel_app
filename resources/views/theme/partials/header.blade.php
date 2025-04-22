@@ -1,4 +1,7 @@
 <!--================Header Menu Area =================-->
+@php
+    $Categories = App\Models\Category::all(); // Fixed namespace declaration issue by using `use` instead of `namespace`
+@endphp
 <header class="header_area">
     <div class="main_menu">
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -17,17 +20,28 @@
             <li class="nav-item submenu dropdown @yield('category-active')">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                 aria-expanded="false">Categories</a>
+                @if($Categories->count() > 0)
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('theme.category') }}">Food</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('theme.category') }}">Bussiness</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('theme.category') }}">Travel</a></li>
+                    @foreach($Categories as $category)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('theme.category') }}"> {{ $category->name }} </a> <!-- Fixed missing closing parenthesis -->
+                        </li>
+                    @endforeach 
                 </ul>
+                @else
+                <ul class="dropdown-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('theme.category') }}">No Category Found</a></li>
+                </ul>
+                @endif
             </li>
             <li class="nav-item @yield('contact-active')" ><a class="nav-link" href="{{ route('theme.contact') }}">Contact</a></li>
             </ul>
             
             <!-- Add new blog -->
-            <a href="#" class="btn btn-sm btn-primary mr-2">Add New</a>
+            @if(Auth::check() ){
+                <a href="{{ route('blogs.create') }}" class="btn btn-sm btn-primary mr-2">Add New</a>
+            }
+            @endif
             <!-- End - Add new blog -->
 
             <ul class="nav navbar-nav navbar-right navbar-social">
@@ -35,7 +49,7 @@
                 <a href="{{ route('register') }}" class="btn btn-sm btn-warning">Register / Login</a>
                 @else
                 <li class="nav-item dropdown submenu">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                     aria-expanded="false">{{ Auth::user()->name }}</a>
                     <ul class="dropdown-menu">
                         <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>

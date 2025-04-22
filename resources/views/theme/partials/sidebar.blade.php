@@ -1,4 +1,7 @@
         <!-- Start Blog Post Siddebar -->
+@php
+    $Categories = App\Models\Category::all(); // Fixed namespace declaration issue by using `use` instead of `namespace`
+@endphp
         <div class="col-lg-4 sidebar-widgets">
             <div class="widget-wrap">
                 <div class="single-sidebar-widget newsletter-widget">
@@ -25,38 +28,26 @@
 
                 <div class="single-sidebar-widget post-category-widget">
                 <h4 class="single-sidebar-widget__title">Catgory</h4>
-                <ul class="cat-list mt-20">
-                    <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Technology</p>
-                        <p>(03)</p>
-                    </a>
-                    </li>
-                    <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Software</p>
-                        <p>(09)</p>
-                    </a>
-                    </li>
-                    <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Lifestyle</p>
-                        <p>(12)</p>
-                    </a>
-                    </li>
-                    <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Shopping</p>
-                        <p>(02)</p>
-                    </a>
-                    </li>
-                    <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Food</p>
-                        <p>(10)</p>
-                    </a>
-                    </li>
-                </ul>
+                @if($Categories->count() > 0)
+                    <ul class="cat-list mt-20">
+                        @foreach($Categories as $category)
+                            <li>
+                                <a href="{{ route('theme.category') }}" class="d-flex justify-content-between">
+                                    <p>{{ $category->name }}</p>
+                                    <p>(03)</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else 
+                    <ul class="cat-list mt-20">
+                        <li>
+                            <a href="{{ route('theme.category') }}" class="d-flex justify-content-between">
+                                <p>No Category Found</p>
+                            </a>
+                        </li>
+                    </ul>
+                @endif
                 </div>
 
                 <div class="single-sidebar-widget popular-post-widget">
