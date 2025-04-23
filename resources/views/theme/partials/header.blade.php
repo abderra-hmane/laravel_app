@@ -24,23 +24,22 @@
                 <ul class="dropdown-menu">
                     @foreach($Categories as $category)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('theme.category') }}"> {{ $category->name }} </a> <!-- Fixed missing closing parenthesis -->
+                            <a class="nav-link" href="{{ route('theme.category', ['id' => $category->id]) }}"> {{ $category->name }} </a> 
                         </li>
                     @endforeach 
                 </ul>
                 @else
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('theme.category') }}">No Category Found</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">No Category Found</a></li>
                 </ul>
                 @endif
             </li>
-            <li class="nav-item @yield('contact-active')" ><a class="nav-link" href="{{ route('theme.contact') }}">Contact</a></li>
+            <li class="nav-item @yield('contact-active')"><a class="nav-link" href="{{ route('theme.contact') }}">Contact</a></li>
             </ul>
             
             <!-- Add new blog -->
-            @if(Auth::check() ){
-                <a href="{{ route('blogs.create') }}" class="btn btn-sm btn-primary mr-2">Add New</a>
-            }
+            @if(Auth::check())
+                <a class="btn btn-sm btn-primary mr-2" href="{{ route('blogs.create') }}">Add New</a> <!-- Fixed Blade syntax -->
             @endif
             <!-- End - Add new blog -->
 
@@ -53,11 +52,12 @@
                     aria-expanded="false">{{ Auth::user()->name }}</a>
                     <ul class="dropdown-menu">
                         <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <form action="{{route('logout')}}" method="post">
+                        <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <li class="nav-item"><button type="submit" class="nav-link" style="border: none; background: none;">Logout</button></li>
                         </form>
                     </ul>
+                </li>
                 @endif
             </ul>
         </div> 

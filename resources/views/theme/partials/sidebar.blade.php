@@ -27,12 +27,12 @@
                 </div>
 
                 <div class="single-sidebar-widget post-category-widget">
-                <h4 class="single-sidebar-widget__title">Catgory</h4>
+                <h4 class="single-sidebar-widget__title">Categories</h4>
                 @if($Categories->count() > 0)
                     <ul class="cat-list mt-20">
                         @foreach($Categories as $category)
                             <li>
-                                <a href="{{ route('theme.category') }}" class="d-flex justify-content-between">
+                                <a href="{{ route('theme.category', ['id' => $category->id]) }}" class="d-flex justify-content-between">
                                     <p>{{ $category->name }}</p>
                                     <p>(03)</p>
                                 </a>
@@ -42,7 +42,7 @@
                 @else 
                     <ul class="cat-list mt-20">
                         <li>
-                            <a href="{{ route('theme.category') }}" class="d-flex justify-content-between">
+                            <a href="#" class="d-flex justify-content-between">
                                 <p>No Category Found</p>
                             </a>
                         </li>
